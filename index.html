@@ -39,7 +39,7 @@
     line-height: 1.5;
   }
   a { color: inherit; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem 4rem; }
   header.site { padding: 2rem 0 0.5rem; }
   .back-link {
     display: inline-block; font-size: 0.875rem; color: var(--text-muted);
@@ -48,10 +48,36 @@
   .back-link:hover { color: var(--text); }
   h1 { font-size: 2.5rem; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
   .intro { color: var(--text-muted); max-width: 620px; margin: 0 0 2.5rem; font-size: 1.05rem; }
+  .layout { display: flex; gap: 2.5rem; align-items: flex-start; }
+  .nav-pane {
+    flex: 0 0 200px;
+    position: sticky;
+    top: 1.5rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+  }
+  .nav-label {
+    display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.75rem;
+  }
+  .nav-pane ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .nav-pane a {
+    text-decoration: none; color: var(--text-muted); font-size: 0.9rem;
+    border-left: 2px solid var(--border); padding-left: 0.75rem; display: block;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .nav-pane a:hover { color: var(--text); border-color: var(--text); }
+  .content { flex: 1; min-width: 0; }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.25rem;
+  }
+  .card { scroll-margin-top: 1.5rem; }
+  @media (max-width: 700px) {
+    .layout { flex-direction: column; }
+    .nav-pane { position: static; max-height: none; flex: 1 1 auto; width: 100%; }
+    .nav-pane ul { flex-direction: row; flex-wrap: wrap; }
   }
   .card {
     background: var(--bg);
@@ -113,9 +139,12 @@
     <h1>Software</h1>
     <p class="intro">A small pile of things I built because the existing options annoyed me enough to fix them. Synced automatically from <a href="https://github.com/Micropeptide" target="_blank" rel="noopener">github.com/Micropeptide</a>.</p>
   </header>
-  <main class="grid">
+  <div class="layout">
+    <nav class="nav-pane"><span class="nav-label">On this page</span><ul><li><a href="#middleclick-autoscroll-safari">MiddleClick-AutoScroll-Safari</a></li><li><a href="#dockanchor">DockAnchor</a></li><li><a href="#firefly">Firefly</a></li><li><a href="#pocket">Pocket</a></li><li><a href="#igv-x">IGV-X</a></li></ul></nav>
+    <main class="content">
+      <div class="grid">
 
-      <article class="card">
+      <article class="card" id="middleclick-autoscroll-safari">
         <div class="card-head">
           <img class="icon" src="assets/icons/MiddleClick-AutoScroll-Safari.png" alt="MiddleClick-AutoScroll-Safari icon" width="64" height="64" loading="lazy">
           <div class="card-title">
@@ -138,7 +167,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" id="dockanchor">
         <div class="card-head">
           <img class="icon" src="assets/icons/DockAnchor.png" alt="DockAnchor icon" width="64" height="64" loading="lazy">
           <div class="card-title">
@@ -161,7 +190,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" id="firefly">
         <div class="card-head">
           <img class="icon" src="assets/icons/Firefly.png" alt="Firefly icon" width="64" height="64" loading="lazy">
           <div class="card-title">
@@ -184,7 +213,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" id="pocket">
         <div class="card-head">
           <img class="icon" src="assets/icons/Pocket.png" alt="Pocket icon" width="64" height="64" loading="lazy">
           <div class="card-title">
@@ -207,7 +236,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" id="igv-x">
         <div class="card-head">
           <img class="icon" src="assets/icons/IGV-X.png" alt="IGV-X icon" width="64" height="64" loading="lazy">
           <div class="card-title">
@@ -229,7 +258,9 @@
           </div>
         </div>
       </article>
-  </main>
+      </div>
+    </main>
+  </div>
   <footer class="site">
     Last synced August 30, 2026 &middot; generated from public GitHub repository data
   </footer>
