@@ -101,6 +101,19 @@ def get_latest_release_dmg(repo_name):
     return (dmg["url"] if dmg else None), data["tagName"]
 
 
+def get_display_order(repo_name):
+    """Repos can opt into an explicit display order by adding a `.order` file
+    at their root containing a single integer. Lower sorts first; repos
+    without one sort after, by most-recently-updated."""
+    f = gh_api(f"repos/{GITHUB_USER}/{repo_name}/contents/.order", accept_404=True)
+    if not f:
+        return None
+    try:
+        return int(base64.b64decode(f["content"]).decode().strip())
+    except (ValueError, KeyError):
+        return None
+
+
 def get_readme_text(repo_name):
     readme = gh_api(f"repos/{GITHUB_USER}/{repo_name}/readme", accept_404=True)
     if not readme:
@@ -158,7 +171,12 @@ def fetch_manifest():
             "updated_at": r["updatedAt"],
             "icon_download_url": icon_url,
             "features": extract_feature_bullets(readme),
+            "order": get_display_order(name),
         })
+    # Explicit .order wins (ascending); everything else follows, most-recently-updated
+    # first (two stable sorts: recency breaks ties among the unordered apps).
+    apps.sort(key=lambda a: a["updated_at"], reverse=True)
+    apps.sort(key=lambda a: (a["order"] is None, a["order"] or 0))
     return apps
 
 
@@ -261,13 +279,6 @@ PAGE_TEMPLATE = """<!doctype html>
     --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.04);
     --shadow-hover: 0 4px 10px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08);
   }}
-  @media (prefers-color-scheme: dark) {{
-    :root {{
-      --bg: #121212; --bg-subtle: #1a1a1a; --text: #f3f4f6; --text-muted: #9ca3af;
-      --border: #2a2a2a; --primary: #f3f4f6; --primary-contrast: #121212;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3); --shadow-hover: 0 8px 24px rgba(0,0,0,0.5);
-    }}
-  }}
   * {{ box-sizing: border-box; }}
   body {{ margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }}
   a {{ color: inherit; }}
@@ -283,6 +294,7 @@ PAGE_TEMPLATE = """<!doctype html>
   .nav-pane ul {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }}
   .nav-pane a {{ text-decoration: none; color: var(--text-muted); font-size: 0.9rem; border-left: 2px solid var(--border); padding-left: 0.75rem; display: block; transition: color 0.15s ease, border-color 0.15s ease; }}
   .nav-pane a:hover {{ color: var(--text); border-color: var(--text); }}
+  .nav-pane a.active {{ color: var(--text); border-color: var(--text); font-weight: 600; }}
   .content {{ flex: 1; min-width: 0; }}
   .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }}
   .card {{ scroll-margin-top: 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; display: flex; flex-direction: column; }}
@@ -317,7 +329,7 @@ PAGE_TEMPLATE = """<!doctype html>
   <header class="site">
     <a class="back-link" href="https://runtian.uk">&larr; runtian.uk</a>
     <h1>Software</h1>
-    <p class="intro">A small pile of things I built because the existing options annoyed me enough to fix them. Synced automatically from <a href="https://github.com/Micropeptide" target="_blank" rel="noopener">github.com/Micropeptide</a>.</p>
+    <p class="intro">This is a collection of tools I&rsquo;ve made for research, productivity, automation, and the occasional oddly specific problem. Most started with a simple thought: surely there&rsquo;s a better way to do this.</p>
   </header>
   <div class="layout">
     {nav}
@@ -331,6 +343,22 @@ PAGE_TEMPLATE = """<!doctype html>
     Last synced {synced_at} &middot; generated from public GitHub repository data
   </footer>
 </div>
+<script>
+  (function() {{
+    var links = Array.from(document.querySelectorAll('.nav-pane a'));
+    var sections = links.map(function(l) {{ return document.getElementById(l.getAttribute('href').slice(1)); }});
+    function onScroll() {{
+      var pos = window.scrollY + 100;
+      var activeIdx = 0;
+      sections.forEach(function(sec, i) {{
+        if (sec && sec.offsetTop <= pos) activeIdx = i;
+      }});
+      links.forEach(function(l, i) {{ l.classList.toggle('active', i === activeIdx); }});
+    }}
+    document.addEventListener('scroll', onScroll, {{ passive: true }});
+    onScroll();
+  }})();
+</script>
 </body>
 </html>
 """
