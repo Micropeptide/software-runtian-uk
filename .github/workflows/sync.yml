@@ -1,0 +1,40 @@
+name: Sync software page from GitHub repos
+
+on:
+  schedule:
+    # Every 6 hours. GitHub may delay scheduled runs somewhat under load.
+    - cron: "17 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --quiet Pillow
+
+      - name: Run sync
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 ci/sync.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html assets/icons
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Auto-sync software page from GitHub repos"
+            git push
+          fi
