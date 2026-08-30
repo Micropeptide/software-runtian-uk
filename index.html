@@ -7,117 +7,54 @@
 <meta name="description" content="Software built by Runtian Wu — macOS utilities and research tools.">
 <style>
   :root {
-    --bg: #ffffff;
-    --bg-subtle: #f8f9fa;
-    --text: #1a1a1a;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --primary: #2b2b2b;
-    --primary-contrast: #ffffff;
+    --bg: #ffffff; --bg-subtle: #f8f9fa; --text: #1a1a1a; --text-muted: #6b7280;
+    --border: #e5e7eb; --primary: #2b2b2b; --primary-contrast: #ffffff;
     --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.04);
     --shadow-hover: 0 4px 10px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08);
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-  }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
   a { color: inherit; }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem 4rem; }
   header.site { padding: 2rem 0 0.5rem; }
-  .back-link {
-    display: inline-block; font-size: 0.875rem; color: var(--text-muted);
-    text-decoration: none; margin-bottom: 1.5rem;
-  }
+  .back-link { display: inline-block; font-size: 0.875rem; color: var(--text-muted); text-decoration: none; margin-bottom: 1.5rem; }
   .back-link:hover { color: var(--text); }
   h1 { font-size: 2.5rem; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
   .intro { color: var(--text-muted); max-width: 620px; margin: 0 0 2.5rem; font-size: 1.05rem; }
   .layout { display: flex; gap: 2.5rem; align-items: flex-start; }
-  .nav-pane {
-    flex: 0 0 200px;
-    position: sticky;
-    top: 1.5rem;
-    max-height: calc(100vh - 3rem);
-    overflow-y: auto;
-  }
-  .nav-label {
-    display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.75rem;
-  }
+  .nav-pane { flex: 0 0 200px; position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
+  .nav-label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.75rem; }
   .nav-pane ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-  .nav-pane a {
-    text-decoration: none; color: var(--text-muted); font-size: 0.9rem;
-    border-left: 2px solid var(--border); padding-left: 0.75rem; display: block;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
+  .nav-pane a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; border-left: 2px solid var(--border); padding-left: 0.75rem; display: block; transition: color 0.15s ease, border-color 0.15s ease; }
   .nav-pane a:hover { color: var(--text); border-color: var(--text); }
   .nav-pane a.active { color: var(--text); border-color: var(--text); font-weight: 600; }
   .content { flex: 1; min-width: 0; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
-  .card { scroll-margin-top: 1.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+  .card { scroll-margin-top: 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; display: flex; flex-direction: column; }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: transparent; }
   @media (max-width: 700px) {
     .layout { flex-direction: column; }
     .nav-pane { position: static; max-height: none; flex: 1 1 auto; width: 100%; }
     .nav-pane ul { flex-direction: row; flex-wrap: wrap; }
   }
-  .card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
-    border-color: transparent;
-  }
   .card-head { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
   .icon { width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
   .card-title h2 { font-size: 1.25rem; margin: 0 0 0.35rem; }
   .badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .badge {
-    font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.55rem;
-    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.02em;
-  }
+  .badge { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.02em; }
   .desc { color: var(--text-muted); font-size: 0.925rem; margin: 0 0 1rem; }
-  .features {
-    list-style: none; padding: 0; margin: 0 0 1.25rem; font-size: 0.875rem;
-    color: var(--text); display: flex; flex-direction: column; gap: 0.4rem;
-    flex-grow: 1;
-  }
+  .features { list-style: none; padding: 0; margin: 0 0 1.25rem; font-size: 0.875rem; color: var(--text); display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; }
   .features li { padding-left: 1.3rem; position: relative; }
-  .features li::before {
-    content: "✓"; position: absolute; left: 0; color: #16a34a; font-weight: 700;
-  }
-  .card-foot {
-    margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 0.75rem;
-  }
+  .features li::before { content: "✓"; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
+  .card-foot { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.75rem; }
   .updated { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
   .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .actions .btn { flex: 1 1 auto; text-align: center; }
-  .btn {
-    font-size: 0.8125rem; font-weight: 600; padding: 0.4rem 0.85rem;
-    border-radius: 8px; text-decoration: none; transition: opacity 0.15s ease;
-  }
+  .btn { font-size: 0.8125rem; font-weight: 600; padding: 0.4rem 0.85rem; border-radius: 8px; text-decoration: none; transition: opacity 0.15s ease; }
   .btn:hover { opacity: 0.8; }
   .btn-primary { background: var(--primary); color: var(--primary-contrast); }
   .btn-outline { border: 1px solid var(--border); color: var(--text); }
-  footer.site {
-    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
-    font-size: 0.8rem; color: var(--text-muted);
-  }
+  footer.site { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -230,7 +167,7 @@
           <div class="card-title">
             <h2>MiddleClick-AutoScroll-Safari</h2>
             <div class="badges">
-              <span class="badge" style="color:#fff;background:#586069">JavaScript</span>
+              <span class="badge" style="color:#fff;background:#f1e05a">JavaScript</span>
               <span class="badge" style="color:#586069;background:#f1f3f5">MIT License</span>
             </div>
           </div>
