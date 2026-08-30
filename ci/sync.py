@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 GITHUB_USER = "Micropeptide"
-EXCLUDE_REPOS = {"hello-runtian-uk", "software-runtian-uk"}
+EXCLUDE_REPOS = {"hello-runtian-uk", "software-runtian-uk", "about-runtian-uk"}
 CUSTOM_DOMAIN = "software.runtian.uk"
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
