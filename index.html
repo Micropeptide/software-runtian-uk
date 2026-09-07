@@ -65,7 +65,7 @@
     <p class="intro">This is a collection of tools I&rsquo;ve made for research, productivity, automation, and the occasional oddly specific problem. Most started with a simple thought: surely there&rsquo;s a better way to do this.</p>
   </header>
   <div class="layout">
-    <nav class="nav-pane"><span class="nav-label">On this page</span><ul><li><a href="#orbit">Orbit</a></li><li><a href="#igv-x">IGV-X</a></li><li><a href="#firefly">Firefly</a></li><li><a href="#dockanchor">DockAnchor</a></li><li><a href="#pocket">Pocket</a></li><li><a href="#middleclick-autoscroll-safari">MiddleClick-AutoScroll-Safari</a></li></ul></nav>
+    <nav class="nav-pane"><span class="nav-label">On this page</span><ul><li><a href="#orbit">Orbit</a></li><li><a href="#orbit-ios">Orbit-iOS</a></li><li><a href="#igv-x">IGV-X</a></li><li><a href="#firefly">Firefly</a></li><li><a href="#dockanchor">DockAnchor</a></li><li><a href="#pocket">Pocket</a></li><li><a href="#middleclick-autoscroll-safari">MiddleClick-AutoScroll-Safari</a></li></ul></nav>
     <main class="content">
       <div class="grid">
 
@@ -92,6 +92,29 @@
         </div>
       </article>
 
+      <article class="card" id="orbit-ios">
+        <div class="card-head">
+          <img class="icon" src="assets/icons/Orbit-iOS.png" alt="Orbit-iOS icon" width="64" height="64" loading="lazy">
+          <div class="card-title">
+            <h2>Orbit-iOS</h2>
+            <div class="badges">
+              <span class="badge" style="color:#fff;background:#f05138">Swift</span>
+              <span class="badge" style="color:#586069;background:#f1f3f5">MIT License</span>
+            </div>
+          </div>
+        </div>
+        <p class="desc">The iPhone app for Orbit — your chats, live from your own Mac over Tailscale or Wi-Fi. Attach photos and files, search every message, pick the model, control the local server. Sideload the IPA or build with Xcode.</p>
+        <ul class='features'><li>Your conversations, live. The same chats as on the Mac, streaming as they are written, grouped by day, with pin, archive, rename, bin, and a filter by project. Search titles *and* the text of every message, then jump straight to the line.</li><li>Everything a conversation needs. Markdown with real tables and code blocks, collapsible reasoning, tool calls as they happen, approval prompts mid-answer. Long-press to copy, quote, edit-and-resend, ask again, or share an answer as text or as an image card. Find inside a chat; /new, /model, /compact, /find.</li><li>Send what you are looking at. Photos from the library, a picture from the camera, or any file from the Files app — uploaded to the Mac and sent with your message. Plots and pictures render inline; tap to zoom, save to Photos.</li><li>Run the Mac from your pocket. Pick the model per chat (the local MLX model, the coding CLI you are signed into, or a hosted API — each answer is labelled with the one that wrote it). Start, stop, restart or switch the local model server. See and trigger the Mac's automatic iCloud backup. Restore from the bin.</li></ul>
+        <div class="card-foot">
+          <span class="updated">v1.0 &middot; Updated Sep 2026</span>
+          <div class="actions">
+            <a class="btn btn-outline" href="https://github.com/Micropeptide/Orbit-iOS" target="_blank" rel="noopener">Source</a>
+            <a class="btn btn-outline" href="https://github.com/Micropeptide/Orbit-iOS/releases" target="_blank" rel="noopener">Releases</a>
+            
+          </div>
+        </div>
+      </article>
+
       <article class="card" id="igv-x">
         <div class="card-head">
           <img class="icon" src="assets/icons/IGV-X.png" alt="IGV-X icon" width="64" height="64" loading="lazy">
@@ -106,7 +129,7 @@
         <p class="desc">IGV-X — a robust, modern fork of IGV (Integrative Genomics Viewer) for large epigenomics sessions: chromosome-name resolution, bigWig NPE fix, large-session performance, relative session paths, bookmarks, high-quality export, organize-by-genotype, in-app updates</p>
         <ul class='features'><li>Chromosome-name resolution that never crashes: fixes the stock IGV 2.19.5 bigWig NullPointerException on TAIR10 WGBS sessions (hundreds of methylation bigWigs with Chr1..ChrM vs RefSeq aliases); case-insensitive, alias-aware resolution across bigWig/bigBed/BAM/BED/VCF using genome alias info — never global lowercase conversion, never renaming user files.</li><li>Large-session performance for ~900 bigWig sessions: bounded loading threads, async loads, honest progress, viewport culling, caching.</li><li>Relative session paths by default, optional .igvx.json companion, bookmarks & highlights persisted in the session, cancelable session loading.</li><li>High-quality PNG/SVG/PDF export, multi-track selection, configurable default quantitative ranges, trackpad navigation.</li></ul>
         <div class="card-foot">
-          <span class="updated">v2.19.5-igvx.3 &middot; Updated Aug 2026</span>
+          <span class="updated">v2.19.5-igvx.3 &middot; Updated Sep 2026</span>
           <div class="actions">
             <a class="btn btn-outline" href="https://github.com/Micropeptide/IGV-X" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="https://github.com/Micropeptide/IGV-X/releases" target="_blank" rel="noopener">Releases</a>
@@ -129,7 +152,7 @@
         <p class="desc">Menu bar utility that keeps your Mac awake — on demand, on a schedule, or automatically, including through a closed lid.</p>
         <ul class='features'><li>Prevent idle sleep, keep the display awake too, or survive a closed lid — independently combinable, the same mechanism caffeinate uses under the hood</li><li>Quick durations (15/30/60/120/240 minutes) or a custom timer</li><li>Scroll on the menu bar icon to extend or shorten an active timer</li><li>"Until this app quits" — pick any running app and stay awake for as long as it's open</li></ul>
         <div class="card-foot">
-          <span class="updated">v1.3.1 &middot; Updated Aug 2026</span>
+          <span class="updated">v1.3.1 &middot; Updated Sep 2026</span>
           <div class="actions">
             <a class="btn btn-outline" href="https://github.com/Micropeptide/Firefly" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="https://github.com/Micropeptide/Firefly/releases" target="_blank" rel="noopener">Releases</a>
@@ -152,7 +175,7 @@
         <p class="desc">Keeps the macOS Dock pinned to one display across multiple monitors</p>
         <ul class='features'><li>Guard Dock — pause/resume without quitting.</li><li>Anchor Screen — pick which connected display keeps the Dock.</li><li>Launch at Login — installs/removes a per-user LaunchAgent.</li><li>Check for Updates — Weekly / Monthly / Never. DockAnchor only *checks* GitHub Releases for a newer version tag in the background; it never downloads or installs anything automatically. If a newer version exists, a menu item appears linking to the release page so you can grab it yourself.</li></ul>
         <div class="card-foot">
-          <span class="updated">v1.0.1 &middot; Updated Aug 2026</span>
+          <span class="updated">v1.0.1 &middot; Updated Sep 2026</span>
           <div class="actions">
             <a class="btn btn-outline" href="https://github.com/Micropeptide/DockAnchor" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="https://github.com/Micropeptide/DockAnchor/releases" target="_blank" rel="noopener">Releases</a>
@@ -175,7 +198,7 @@
         <p class="desc">Menu bar organizer for Mac — sort icons into always-visible and hidden groups, and reach every one of them from a single click.</p>
         <ul class='features'><li>One-click access to every menu bar icon, whether or not your Mac currently has room to display it. Pocket keeps a live list of every app with a menu bar icon and opens any of them directly, so nothing is ever truly out of reach.</li><li>Click again to close it — the same click that opens the list closes it.</li><li>Global keyboard shortcut to bring up the list from anywhere.</li><li>Auto-close after clicking elsewhere, after an idle timeout, or when the frontmost app goes fullscreen — all optional, all in Settings.</li></ul>
         <div class="card-foot">
-          <span class="updated">v1.0.0 &middot; Updated Aug 2026</span>
+          <span class="updated">v1.0.0 &middot; Updated Sep 2026</span>
           <div class="actions">
             <a class="btn btn-outline" href="https://github.com/Micropeptide/Pocket" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="https://github.com/Micropeptide/Pocket/releases" target="_blank" rel="noopener">Releases</a>
@@ -198,7 +221,7 @@
         <p class="desc">Middle-click anywhere on a page to pan and scroll it in any direction — classic autoscroll, for Safari on macOS.</p>
         <ul class='features'><li>Two ways to use it — a quick click arms autoscroll hands-free (move the mouse, no button held); a press-and-drag stops the instant you let go.</li><li>Speed ramps with distance from where you clicked, with a small dead zone so you don't scroll by accident.</li><li>Axis snapping — near-straight drags lock to one axis so small hand tremor doesn't cause diagonal drift.</li><li>Scroll bubbling — if the scrollable box you started in (a sidebar, a code block) hits its own limit, autoscroll keeps going on the page behind it instead of getting stuck.</li></ul>
         <div class="card-foot">
-          <span class="updated">v1.2.0 &middot; Updated Aug 2026</span>
+          <span class="updated">v1.2.0 &middot; Updated Sep 2026</span>
           <div class="actions">
             <a class="btn btn-outline" href="https://github.com/Micropeptide/MiddleClick-AutoScroll-Safari" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="https://github.com/Micropeptide/MiddleClick-AutoScroll-Safari/releases" target="_blank" rel="noopener">Releases</a>
