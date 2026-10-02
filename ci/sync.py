@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 GITHUB_USER = "Micropeptide"
-EXCLUDE_REPOS = {"hello-runtian-uk", "software-runtian-uk", "about-runtian-uk"}
+EXCLUDE_REPOS = {"hello-runtian-uk", "software-runtian-uk", "about-runtian-uk", "home-runtian-uk", "overlap-runtian-uk"}
 CUSTOM_DOMAIN = "software.runtian.uk"
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -47,7 +47,7 @@ def gh_api(path, accept_404=False):
 def list_repos():
     result = subprocess.run(
         ["gh", "repo", "list", GITHUB_USER, "--limit", "100", "--source", "--json",
-         "name,description,url,isFork,isArchived,primaryLanguage,licenseInfo,updatedAt"],
+         "name,description,url,homepageUrl,isFork,isArchived,primaryLanguage,licenseInfo,updatedAt"],
         capture_output=True, text=True, check=True,
     )
     repos = json.loads(result.stdout)
@@ -163,6 +163,8 @@ def fetch_manifest():
             "name": name,
             "description": r["description"] or "",
             "url": r["url"],
+            # A repo's "website" field, for web apps (shown as an Open button).
+            "homepage_url": r.get("homepageUrl") or None,
             "releases_url": r["url"] + "/releases",
             "dmg_url": dmg_url,
             "version": version,
@@ -232,6 +234,18 @@ def render_nav(apps):
     return f'<nav class="nav-pane"><span class="nav-label">On this page</span><ul>{items}</ul></nav>'
 
 
+
+def primary_action(app):
+    """Download for a released macOS app; otherwise Open for a web app whose
+    repo has a website (unless that website is this software page itself)."""
+    if app.get("dmg_url"):
+        return f'<a class="btn btn-primary" href="{app["dmg_url"]}" download>Download</a>'
+    home = app.get("homepage_url") or ""
+    if home.startswith("https://") and "software.runtian.uk" not in home:
+        return f'<a class="btn btn-primary" href="{home}" target="_blank" rel="noopener">Open</a>'
+    return ""
+
+
 def render_card(app):
     icon_file = f"assets/icons/{app['name']}.{app['icon_ext']}"
     slug = slugify(app["name"])
@@ -259,7 +273,7 @@ def render_card(app):
           <div class="actions">
             <a class="btn btn-outline" href="{app['url']}" target="_blank" rel="noopener">Source</a>
             <a class="btn btn-outline" href="{app['releases_url']}" target="_blank" rel="noopener">Releases</a>
-            {f'<a class="btn btn-primary" href="{app["dmg_url"]}" download>Download</a>' if app.get('dmg_url') else ''}
+            {primary_action(app)}
           </div>
         </div>
       </article>"""
@@ -271,7 +285,7 @@ PAGE_TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <title>Software — Runtian Wu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Software built by Runtian Wu — macOS utilities and research tools.">
+<meta name="description" content="Software built by Runtian Wu — macOS utilities, web apps and research tools.">
 <style>
   :root {{
     --bg: #ffffff; --bg-subtle: #f8f9fa; --text: #1a1a1a; --text-muted: #6b7280;
